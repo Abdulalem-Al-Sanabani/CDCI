@@ -1,0 +1,19 @@
+{
+  "name": "recipe-share",
+  "version": "1.0.0",
+  "description": "A modern Node.js web app for sharing recipes.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "recipes"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2",
+    "mysql2": "^3.14.1"
+  }
+}

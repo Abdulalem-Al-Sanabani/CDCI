@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recipe Share</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <nav class="topbar">
+          <a class="brand" href="#top">Recipe Share</a>
+          <a class="topbar-link" href="#share-form">Share a recipe</a>
+        </nav>
+
+        <div class="hero-grid">
+          <section class="hero-copy">
+            <p class="eyebrow">Cook together, even apart</p>
+            <h1>Share recipes that look as good as they taste.</h1>
+            <p class="hero-text">
+              Discover quick ideas, post your own signature dish, and keep your kitchen inspiration in one bright,
+              easy space.
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#recipe-feed">Browse recipes</a>
+              <a class="button button-secondary" href="#share-form">Post yours</a>
+            </div>
+          </section>
+
+          <aside class="hero-panel">
+            <div class="stat-card">
+              <span class="stat-label">Community favorites</span>
+              <strong class="stat-value" id="recipe-count">0</strong>
+              <span class="stat-note">fresh dishes shared this week</span>
+            </div>
+            <div class="hero-highlight">
+              <p class="highlight-label">Trending now</p>
+              <h2>Fast dinners with bright herbs and pantry staples.</h2>
+              <p>Low effort, strong flavor, ready for weeknights.</p>
+            </div>
+          </aside>
+        </div>
+      </header>
+
+      <main>
+        <section class="panel controls-panel" aria-label="Recipe filters">
+          <div>
+            <p class="section-label">Find your next meal</p>
+            <h2>Browse by mood, moment, or ingredient.</h2>
+          </div>
+          <div class="control-row">
+            <label class="search-field" for="search-input">
+              <span>Search</span>
+              <input id="search-input" type="search" placeholder="Try salmon, toast, chickpeas..." />
+            </label>
+            <label class="select-field" for="category-filter">
+              <span>Category</span>
+              <select id="category-filter">
+                <option value="All">All</option>
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+                <option value="Dessert">Dessert</option>
+                <option value="Snack">Snack</option>
+              </select>
+            </label>
+          </div>
+        </section>
+
+        <section class="recipe-section" id="recipe-feed">
+          <div class="section-heading">
+            <div>
+              <p class="section-label">Recipe feed</p>
+              <h2>Fresh ideas from the community.</h2>
+            </div>
+            <p class="section-copy">Each card includes the story, timing, and ingredients you need to get started.</p>
+          </div>
+          <div class="recipe-grid" id="recipe-list"></div>
+          <p class="empty-state" id="empty-state" hidden>No matching recipes yet. Try a different search or share a new dish.</p>
+        </section>
+
+        <section class="share-layout">
+          <article class="panel share-copy">
+            <p class="section-label">Share your signature dish</p>
+            <h2>Turn a reliable favorite into someone else's next dinner plan.</h2>
+            <p>
+              Keep it short, list the core ingredients, and add enough detail to make the recipe feel inviting.
+            </p>
+            <ul class="tips-list">
+              <li>Lead with a strong recipe title.</li>
+              <li>Add a realistic prep time.</li>
+              <li>Use comma-separated ingredients.</li>
+            </ul>
+          </article>
+
+          <section class="panel form-panel" id="share-form">
+            <p class="section-label">New recipe</p>
+            <h2>Post a recipe</h2>
+            <form id="recipe-form" class="recipe-form">
+              <div class="form-grid">
+                <label>
+                  <span>Recipe title</span>
+                  <input name="title" type="text" placeholder="Roasted tomato pasta" required />
+                </label>
+                <label>
+                  <span>Your name</span>
+                  <input name="author" type="text" placeholder="Amina" required />
+                </label>
+                <label>
+                  <span>Category</span>
+                  <select name="category" required>
+                    <option value="">Select one</option>
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Lunch">Lunch</option>
+                    <option value="Dinner">Dinner</option>
+                    <option value="Dessert">Dessert</option>
+                    <option value="Snack">Snack</option>
+                  </select>
+                </label>
+                <label>
+                  <span>Time</span>
+                  <input name="time" type="text" placeholder="35 min" required />
+                </label>
+              </div>
+              <label>
+                <span>Description</span>
+                <textarea
+                  name="description"
+                  rows="4"
+                  placeholder="Tell people what makes this recipe worth trying."
+                  required
+                ></textarea>
+              </label>
+              <label>
+                <span>Ingredients</span>
+                <textarea
+                  name="ingredients"
+                  rows="3"
+                  placeholder="Pasta, tomatoes, garlic, olive oil, basil"
+                ></textarea>
+              </label>
+              <div class="form-footer">
+                <button class="button button-primary" type="submit">Share recipe</button>
+                <p class="form-message" id="form-message" aria-live="polite"></p>
+              </div>
+            </form>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <template id="recipe-card-template">
+      <article class="recipe-card">
+        <div class="recipe-card-top">
+          <span class="recipe-category"></span>
+          <span class="recipe-time"></span>
+        </div>
+        <h3 class="recipe-title"></h3>
+        <p class="recipe-description"></p>
+        <ul class="ingredient-list"></ul>
+        <footer class="recipe-card-footer">
+          <span class="recipe-author"></span>
+        </footer>
+      </article>
+    </template>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>
