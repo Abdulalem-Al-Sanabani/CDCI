@@ -4,7 +4,8 @@
   "description": "A modern Node.js web app for sharing recipes.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "check": "node --check server.js && node --check db.js && node --check public/app.js"
   },
   "keywords": [
     "node",
