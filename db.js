@@ -54,16 +54,31 @@ const defaultRecipes = [
 
 const accentCycle = ['sunrise', 'berry', 'forest', 'ocean'];
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST || '127.0.0.1',
-  port: Number(process.env.DB_PORT || 3306),
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'recipes',
-  waitForConnections: true,
-  connectionLimit: 10,
-  namedPlaceholders: true
-});
+function createPoolConfig() {
+  const connectionUri = process.env.MYSQL_URL || process.env.DATABASE_URL;
+
+  if (connectionUri) {
+    return {
+      uri: connectionUri,
+      waitForConnections: true,
+      connectionLimit: 10,
+      namedPlaceholders: true
+    };
+  }
+
+  return {
+    host: process.env.DB_HOST || '127.0.0.1',
+    port: Number(process.env.DB_PORT || 3306),
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_NAME || 'recipes',
+    waitForConnections: true,
+    connectionLimit: 10,
+    namedPlaceholders: true
+  };
+}
+
+const pool = mysql.createPool(createPoolConfig());
 
 async function createTables() {
   await pool.query(`
@@ -204,10 +219,15 @@ async function getRecipeCount() {
   return recipeCount;
 }
 
+async function pingDatabase() {
+  await pool.query('SELECT 1');
+}
+
 module.exports = {
   getRecipeCount,
   getRecipes,
   initDatabase,
   insertRecipe,
+  pingDatabase,
   pool
 };
