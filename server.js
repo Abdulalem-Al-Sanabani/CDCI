@@ -1,12 +1,21 @@
 const express = require('express');
 const path = require('path');
-const { getRecipeCount, getRecipes, initDatabase, insertRecipe } = require('./db');
+const { getRecipeCount, getRecipes, initDatabase, insertRecipe, pingDatabase } = require('./db');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/health', async (_request, response) => {
+  try {
+    await pingDatabase();
+    response.json({ status: 'ok', database: 'ok' });
+  } catch (error) {
+    response.status(503).json({ status: 'degraded', database: 'unreachable' });
+  }
+});
 
 app.get('/api/recipes', async (_request, response) => {
   try {
