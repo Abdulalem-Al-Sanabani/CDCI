@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: recipe-share
+    runtime: node
+    plan: free
+    autoDeploy: true
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: MYSQL_URL
+        sync: false

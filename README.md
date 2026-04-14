@@ -48,3 +48,10 @@ GitHub Actions can deploy this app to Render.
 The workflow in [.github/workflows/deploy-render.yml](.github/workflows/deploy-render.yml) triggers a Render deploy on every push to `main` and can also be run manually.
 
 The app now supports Render-friendly MySQL configuration by reading `MYSQL_URL` first, then `DATABASE_URL`, and finally the individual `DB_*` variables.
+
+### Render Blueprint
+
+The repository includes [render.yaml](render.yaml) so the Render web service settings are tracked in version control.
+It defines the Node runtime, `npm ci` build command, `npm start` start command, and `/health` as the health check path.
+
+`MYSQL_URL` is marked as `sync: false`, which means you still need to set the real MySQL connection string securely in Render.
